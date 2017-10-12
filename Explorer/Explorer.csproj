@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Explorers\Explorer.cs" />
+    <Compile Include="Explorers\RandomExplorer.cs" />
     <Compile Include="ILocationListener.cs" />
     <Compile Include="Path.cs" />
     <Compile Include="Explorers\TongueExplorer.cs" />

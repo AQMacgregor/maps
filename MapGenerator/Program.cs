@@ -19,8 +19,8 @@ namespace MapGenerator
             var maxPath = args.Length > 3 ? Convert.ToInt32(args[1]) : 100;
             var map = new Map.Map();
             var generator = new StraightPathGenerator(seed, map);
-            var explorer = new TongueExplorer(map, new List<Explorer.ILocationListener>() { generator });
-            explorer.Explore(moves, maxPath);
+            var explorer = new RandomExplorer(map, new List<Explorer.ILocationListener>() { generator });
+            explorer.Explore(seed, moves);
 
             MapDrawer drawer = new MapDrawer();
             drawer.DrawMap(map);
