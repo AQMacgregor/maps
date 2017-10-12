@@ -17,7 +17,6 @@ namespace MapRunner
     {
         public int X {  get; private set; }
         public int Y { get; private set; }
-        internal bool Visited { get; private set; }
         public MapSquareEdge NorthEdge { get; private set; }
         public MapSquareEdge EastEdge { get; private set; }
         public MapSquareEdge SouthEdge { get; private set; }
@@ -71,18 +70,22 @@ namespace MapRunner
                 if (NorthEdge == null && SouthEdge != null && SouthEdge.EdgeType == MapSquareEdgeType.Path)
                 {
                     NorthEdge = new MapSquareEdge(MapSquareEdgeType.Path);
+                    numberOfpaths++;
                 }
                 if (SouthEdge == null && NorthEdge != null && NorthEdge.EdgeType == MapSquareEdgeType.Path)
                 {
                     SouthEdge = new MapSquareEdge(MapSquareEdgeType.Path);
+                    numberOfpaths++;
                 }
                 if (EastEdge == null && WestEdge != null && WestEdge.EdgeType == MapSquareEdgeType.Path)
                 {
                     EastEdge = new MapSquareEdge(MapSquareEdgeType.Path);
+                    numberOfpaths++;
                 }
                 if (WestEdge == null && EastEdge != null && EastEdge.EdgeType == MapSquareEdgeType.Path)
                 {
                     WestEdge = new MapSquareEdge(MapSquareEdgeType.Path);
+                    numberOfpaths++;
                 }
             }
             if (NorthEdge == null)
@@ -129,11 +132,6 @@ namespace MapRunner
                     WestEdge = new MapSquareEdge(MapSquareEdgeType.Blocked);
                 }
             }
-            Visited = false;
-        }
-        public void Visit()
-        {
-            Visited = true;
         }
         private MapSquare()
         {
@@ -143,7 +141,6 @@ namespace MapRunner
             EastEdge = new MapSquareEdge();
             SouthEdge = new MapSquareEdge();
             WestEdge = new MapSquareEdge();
-            Visited = true;
         }
         public static MapSquare Start()
         {

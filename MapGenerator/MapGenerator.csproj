@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MapDrawer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -49,6 +50,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Explorer\Explorer.csproj">
+      <Project>{158DEA8E-511D-4260-8483-5B6797C0FD69}</Project>
+      <Name>Explorer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MapRunner\MapRunner.csproj">
       <Project>{ef637226-3e34-4891-8b4c-f76f4eb33d68}</Project>
       <Name>MapRunner</Name>
