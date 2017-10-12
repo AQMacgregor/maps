@@ -17,7 +17,7 @@ namespace Explorer.Explorers
     public class Explorer
     {
         MapSquare Current { get; set; }
-        public Map.Map Map { get; private set; }
+        protected Map.Map Map { get; private set; }
         public Path Path { get; private set; }
         public Explorer(Map.Map map, List<ILocationListener> listeners)
         {

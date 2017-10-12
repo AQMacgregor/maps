@@ -44,78 +44,67 @@ namespace Generator.Generators
         }
         public MapSquare CreateSquare(int x, int y, IReadOnlyList<MapSquare> squares)
         {
+            var chanceOfTurn = 0.3;
+            var chanceOfDoubleTurn = 0.05;
+            var chanceOfBlock = 0.1;
+
+            var turn = Random.Next(100) < chanceOfTurn * 100;
+            var doubleTurn = Random.Next(100) < chanceOfDoubleTurn * 100;
+            var block = Random.Next(100) < chanceOfBlock * 100;
+
             MapSquareEdge north = null;
             MapSquareEdge east = null;
             MapSquareEdge south = null;
             MapSquareEdge west = null;
 
-            var numberOfpaths = 0;
-            MapSquare n = squares.SingleOrDefault(square => square.X == x && square.Y == y + 1);
-            if (n != null)
-            {
-                north = new MapSquareEdge(n.SouthEdge.EdgeType);
-                if (north.EdgeType == MapSquareEdgeType.Path)
-                {
-                    numberOfpaths++;
-                }
-            }
+            // First get what we are connected to and fill in the edge types accordingly.
+            
             MapSquare e = squares.SingleOrDefault(square => square.X == x + 1 && square.Y == y);
             if (e != null)
             {
                 east = new MapSquareEdge(e.WestEdge.EdgeType);
-                if (east.EdgeType == MapSquareEdgeType.Path)
-                {
-                    numberOfpaths++;
-                }
-            }
-            MapSquare s = squares.SingleOrDefault(square => square.X == x && square.Y == y - 1);
-            if (s != null)
-            {
-                south = new MapSquareEdge(s.NorthEdge.EdgeType);
-                if (south.EdgeType == MapSquareEdgeType.Path)
-                {
-                    numberOfpaths++;
-                }
             }
             MapSquare w = squares.SingleOrDefault(square => square.X == x - 1 && square.Y == y);
             if (w != null)
             {
                 west = new MapSquareEdge(w.EastEdge.EdgeType);
-                if (west.EdgeType == MapSquareEdgeType.Path)
-                {
-                    numberOfpaths++;
-                }
+            }
+            MapSquare n = squares.SingleOrDefault(square => square.X == x && square.Y == y + 1);
+            if (n != null)
+            {
+                north = new MapSquareEdge(n.SouthEdge.EdgeType);
+            }
+            MapSquare s = squares.SingleOrDefault(square => square.X == x && square.Y == y - 1);
+            if (s != null)
+            {
+                south = new MapSquareEdge(s.NorthEdge.EdgeType);
             }
 
-            var requiredNumberOfPaths = Random.Next(0, 4);
-            if (requiredNumberOfPaths == 2 && numberOfpaths == 1)
+            // Now we want to setup any straight lines
+            if (east == null && west != null && west.EdgeType == MapSquareEdgeType.Path)
             {
-                if (north == null && south != null && south.EdgeType == MapSquareEdgeType.Path)
-                {
-                    north = new MapSquareEdge(MapSquareEdgeType.Path);
-                    numberOfpaths++;
-                }
-                if (south == null && north != null && north.EdgeType == MapSquareEdgeType.Path)
-                {
-                    south = new MapSquareEdge(MapSquareEdgeType.Path);
-                    numberOfpaths++;
-                }
-                if (east == null && west != null && west.EdgeType == MapSquareEdgeType.Path)
-                {
-                    east = new MapSquareEdge(MapSquareEdgeType.Path);
-                    numberOfpaths++;
-                }
-                if (west == null && east != null && east.EdgeType == MapSquareEdgeType.Path)
-                {
-                    west = new MapSquareEdge(MapSquareEdgeType.Path);
-                    numberOfpaths++;
-                }
+                east = new MapSquareEdge(block ? MapSquareEdgeType.Blocked : MapSquareEdgeType.Path);
             }
+            else if (west == null && east != null && east.EdgeType == MapSquareEdgeType.Path)
+            {
+                west = new MapSquareEdge(block ? MapSquareEdgeType.Blocked : MapSquareEdgeType.Path);
+            }
+            else if (north == null && south != null && south.EdgeType == MapSquareEdgeType.Path)
+            {
+                north = new MapSquareEdge(block ? MapSquareEdgeType.Blocked : MapSquareEdgeType.Path);
+            }
+            else if (south == null && north != null && north.EdgeType == MapSquareEdgeType.Path)
+            {
+                south = new MapSquareEdge(block ? MapSquareEdgeType.Blocked : MapSquareEdgeType.Path);
+            }
+            // Now fill in the rest
             if (north == null)
             {
-                if (requiredNumberOfPaths > numberOfpaths)
+                if (turn)
                 {
                     north = new MapSquareEdge(MapSquareEdgeType.Path);
+                    turn = doubleTurn;
+                    doubleTurn = false;
                 }
                 else
                 {
@@ -124,9 +113,11 @@ namespace Generator.Generators
             }
             if (south == null)
             {
-                if (requiredNumberOfPaths > numberOfpaths)
+                if (turn)
                 {
                     south = new MapSquareEdge(MapSquareEdgeType.Path);
+                    turn = doubleTurn;
+                    doubleTurn = false;
                 }
                 else
                 {
@@ -135,9 +126,11 @@ namespace Generator.Generators
             }
             if (east == null)
             {
-                if (requiredNumberOfPaths > numberOfpaths)
+                if (turn)
                 {
                     east = new MapSquareEdge(MapSquareEdgeType.Path);
+                    turn = doubleTurn;
+                    doubleTurn = false;
                 }
                 else
                 {
@@ -146,9 +139,11 @@ namespace Generator.Generators
             }
             if (west == null)
             {
-                if (requiredNumberOfPaths > numberOfpaths)
+                if (turn)
                 {
                     west = new MapSquareEdge(MapSquareEdgeType.Path);
+                    turn = doubleTurn;
+                    doubleTurn = false;
                 }
                 else
                 {

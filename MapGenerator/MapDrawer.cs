@@ -16,8 +16,7 @@ namespace MapGenerator
     /// </summary>
     class MapDrawer
     {
-
-        public void DrawMap(IReadOnlyList<MapSquare> squares)
+        public void DrawMap(Map.Map map)
         {
             if (File.Exists("map.txt"))
             {
@@ -25,140 +24,155 @@ namespace MapGenerator
             }
             using (StreamWriter writer = new StreamWriter("map.txt"))
             {
-                if (squares.Any())
+                Draw(writer, map.Squares);
+            }
+        }
+        public void DrawPath(Explorer.Path path)
+        {
+            if (File.Exists("path.txt"))
+            {
+                File.Delete("path.txt");
+            }
+            using (StreamWriter writer = new StreamWriter("path.txt"))
+            {
+                Draw(writer, path.Squares);
+            }
+        }
+        private void Draw(StreamWriter writer, IReadOnlyList<MapSquare> squares)
+        {
+            if (squares.Any())
+            {
+                var maxX = squares.Max(s => s.X);
+                var minX = squares.Min(s => s.X);
+                var maxY = squares.Max(s => s.Y);
+                var minY = squares.Min(s => s.Y);
+                for (int y = maxY; y >= minY; y--)
                 {
-                    var maxX = squares.Max(s => s.X);
-                    var minX = squares.Min(s => s.X);
-                    var maxY = squares.Max(s => s.Y);
-                    var minY = squares.Min(s => s.Y);
-                    for (int y = maxY; y >= minY; y--)
+                    for (int x = minX; x <= maxX; x++)
                     {
-                        for (int x = minX; x <= maxX; x++)
+                        if (y == 0 && x == 0)
                         {
-                            if (y == 0 && x == 0)
+                            writer.Write("X");
+                        }
+                        else
+                        {
+                            var square = squares.FirstOrDefault(s => s.X == x && s.Y == y);
+                            if (square == null)
                             {
-                                writer.Write("X");
+                                writer.Write(" ");
                             }
                             else
                             {
-                                var square = squares.FirstOrDefault(s => s.X == x && s.Y == y);
-                                if (square == null)
+                                if (square.NorthEdge.EdgeType == MapSquareEdgeType.Path)
                                 {
-                                    writer.Write(" ");
-                                }
-                                else
-                                {
-                                    if (square.NorthEdge.EdgeType == MapSquareEdgeType.Path)
+                                    if (square.EastEdge.EdgeType == MapSquareEdgeType.Path)
                                     {
-                                        if (square.EastEdge.EdgeType == MapSquareEdgeType.Path)
+                                        if (square.SouthEdge.EdgeType == MapSquareEdgeType.Path)
                                         {
-                                            if (square.SouthEdge.EdgeType == MapSquareEdgeType.Path)
+                                            if (square.WestEdge.EdgeType == MapSquareEdgeType.Path)
                                             {
-                                                if (square.WestEdge.EdgeType == MapSquareEdgeType.Path)
-                                                {
-                                                    writer.Write("╬");
-                                                }
-                                                else
-                                                {
-                                                    writer.Write("╠");
-                                                }
+                                                writer.Write("╬");
                                             }
                                             else
                                             {
-                                                if (square.WestEdge.EdgeType == MapSquareEdgeType.Path)
-                                                {
-                                                    writer.Write("╩");
-                                                }
-                                                else
-                                                {
-                                                    writer.Write("╚");
-                                                }
+                                                writer.Write("╠");
                                             }
                                         }
                                         else
                                         {
-                                            if (square.SouthEdge.EdgeType == MapSquareEdgeType.Path)
+                                            if (square.WestEdge.EdgeType == MapSquareEdgeType.Path)
                                             {
-                                                if (square.WestEdge.EdgeType == MapSquareEdgeType.Path)
-                                                {
-                                                    writer.Write("╣");
-                                                }
-                                                else
-                                                {
-                                                    writer.Write("║");
-                                                }
+                                                writer.Write("╩");
                                             }
                                             else
                                             {
-                                                if (square.WestEdge.EdgeType == MapSquareEdgeType.Path)
-                                                {
-                                                    writer.Write("╝");
-                                                }
-                                                else
-                                                {
-                                                    writer.Write("╨");
-                                                }
+                                                writer.Write("╚");
                                             }
                                         }
                                     }
                                     else
                                     {
-                                        if (square.EastEdge.EdgeType == MapSquareEdgeType.Path)
+                                        if (square.SouthEdge.EdgeType == MapSquareEdgeType.Path)
                                         {
-                                            if (square.SouthEdge.EdgeType == MapSquareEdgeType.Path)
+                                            if (square.WestEdge.EdgeType == MapSquareEdgeType.Path)
                                             {
-                                                if (square.WestEdge.EdgeType == MapSquareEdgeType.Path)
-                                                {
-                                                    writer.Write("╦");
-                                                }
-                                                else
-                                                {
-                                                    writer.Write("╔");
-                                                }
+                                                writer.Write("╣");
                                             }
                                             else
                                             {
-                                                if (square.WestEdge.EdgeType == MapSquareEdgeType.Path)
-                                                {
-                                                    writer.Write("═");
-                                                }
-                                                else
-                                                {
-                                                    writer.Write("╞");
-                                                }
+                                                writer.Write("║");
                                             }
                                         }
                                         else
                                         {
-                                            if (square.SouthEdge.EdgeType == MapSquareEdgeType.Path)
+                                            if (square.WestEdge.EdgeType == MapSquareEdgeType.Path)
                                             {
-                                                if (square.WestEdge.EdgeType == MapSquareEdgeType.Path)
-                                                {
-                                                    writer.Write("╗");
-                                                }
-                                                else
-                                                {
-                                                    writer.Write("╥");
-                                                }
+                                                writer.Write("╝");
                                             }
                                             else
                                             {
-                                                if (square.WestEdge.EdgeType == MapSquareEdgeType.Path)
-                                                {
-                                                    writer.Write("╡");
-                                                }
-                                                else
-                                                {
-                                                    writer.Write(" ");
-                                                }
+                                                writer.Write("╨");
+                                            }
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    if (square.EastEdge.EdgeType == MapSquareEdgeType.Path)
+                                    {
+                                        if (square.SouthEdge.EdgeType == MapSquareEdgeType.Path)
+                                        {
+                                            if (square.WestEdge.EdgeType == MapSquareEdgeType.Path)
+                                            {
+                                                writer.Write("╦");
+                                            }
+                                            else
+                                            {
+                                                writer.Write("╔");
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (square.WestEdge.EdgeType == MapSquareEdgeType.Path)
+                                            {
+                                                writer.Write("═");
+                                            }
+                                            else
+                                            {
+                                                writer.Write("╞");
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (square.SouthEdge.EdgeType == MapSquareEdgeType.Path)
+                                        {
+                                            if (square.WestEdge.EdgeType == MapSquareEdgeType.Path)
+                                            {
+                                                writer.Write("╗");
+                                            }
+                                            else
+                                            {
+                                                writer.Write("╥");
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (square.WestEdge.EdgeType == MapSquareEdgeType.Path)
+                                            {
+                                                writer.Write("╡");
+                                            }
+                                            else
+                                            {
+                                                writer.Write(" ");
                                             }
                                         }
                                     }
                                 }
                             }
                         }
-                        writer.WriteLine();
                     }
+                    writer.WriteLine();
                 }
             }
         }
