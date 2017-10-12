@@ -1,16 +1,16 @@
-﻿using MapRunner;
+﻿using Map;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Explorer.PathFinder
+namespace Explorer.Explorers
 {
     public class TongueExplorer : Explorer
     {
-        public TongueExplorer(Map map) 
-            :base(map)
+        public TongueExplorer(Map.Map map, List<ILocationListener> listeners) 
+            :base(map, listeners)
         {
         }
 

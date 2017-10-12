@@ -56,6 +56,10 @@
       <Project>{158DEA8E-511D-4260-8483-5B6797C0FD69}</Project>
       <Name>Explorer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Generator\Generator.csproj">
+      <Project>{5F71DBA6-068D-4FE4-8B9A-A69DB5EF05E0}</Project>
+      <Name>Generator</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Map\Map.csproj">
       <Project>{ef637226-3e34-4891-8b4c-f76f4eb33d68}</Project>
       <Name>MapRunner</Name>

@@ -1,8 +1,7 @@
 ﻿// Author 	 : Alexander.Macgregor
 // Date	  	 : 10/12/2017 10:29:05 AM
-// Copyright : (c) Copyright Magnitude Software 2017
 
-using MapRunner;
+using Map;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -18,7 +17,7 @@ namespace MapGenerator
     class MapDrawer
     {
 
-        public void DrawMap(List<MapSquare> squares)
+        public void DrawMap(IReadOnlyList<MapSquare> squares)
         {
             if (File.Exists("map.txt"))
             {

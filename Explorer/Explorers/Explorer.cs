@@ -1,16 +1,15 @@
 ﻿// Author 	 : Alexander.Macgregor
 // Date	  	 : 10/12/2017 10:23:44 AM
-// Copyright : (c) Copyright Magnitude Software 2017
 
-using Explorer.PathFinder;
-using MapRunner;
+using Explorer;
+using Map;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Explorer
+namespace Explorer.Explorers
 {
     /// <summary>
     /// This class is responsible for 
@@ -18,12 +17,12 @@ namespace Explorer
     public class Explorer
     {
         MapSquare Current { get; set; }
-        public Map Map { get; private set; }
+        public Map.Map Map { get; private set; }
         public Path Path { get; private set; }
-        public Explorer(Map map)
+        public Explorer(Map.Map map, List<ILocationListener> listeners)
         {
             Map = map;
-            Path = new Path();
+            Path = new Path(listeners);
             Go(0, 0);
         }
 
@@ -113,13 +112,8 @@ namespace Explorer
 
         private MapSquare Go(int x, int y)
         {
-            Current = Map.Squares.SingleOrDefault(s => s.X == x && s.Y == y);
-            if (Current == null)
-            {
-                Map.Generate();
-                Current = Go(x, y);
-            }
-            Path.Squares.Add(Current);
+            Current = Map.Squares.Single(s => s.X == x && s.Y == y);
+            Path.AddLocation(Current);
             return Current;
         }
     }

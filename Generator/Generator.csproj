@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{158DEA8E-511D-4260-8483-5B6797C0FD69}</ProjectGuid>
+    <ProjectGuid>{5F71DBA6-068D-4FE4-8B9A-A69DB5EF05E0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Explorer</RootNamespace>
-    <AssemblyName>Explorer</AssemblyName>
+    <RootNamespace>Generator</RootNamespace>
+    <AssemblyName>Generator</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -16,8 +16,8 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>$(AQMBld_Output)Maps\Debug\bin</OutputPath>
-    <IntermediateOutputPath>$(AQMBld_Output)Maps\Debug\obj</IntermediateOutputPath>
+    <OutputPath>$(AQMBld_Output)Maps\Release\bin</OutputPath>
+    <IntermediateOutputPath>$(AQMBld_Output)Maps\Release\obj</IntermediateOutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -42,16 +42,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Explorers\Explorer.cs" />
-    <Compile Include="ILocationListener.cs" />
-    <Compile Include="Path.cs" />
-    <Compile Include="Explorers\TongueExplorer.cs" />
+    <Compile Include="Generators\Generator.cs" />
+    <Compile Include="Generators\SimpleGenerator.cs" />
+    <Compile Include="Generators\StraightPathGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Explorer\Explorer.csproj">
+      <Project>{158DEA8E-511D-4260-8483-5B6797C0FD69}</Project>
+      <Name>Explorer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Map\Map.csproj">
       <Project>{EF637226-3E34-4891-8B4C-F76F4EB33D68}</Project>
-      <Name>MapRunner</Name>
+      <Name>Map</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
