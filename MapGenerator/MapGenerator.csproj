@@ -17,8 +17,8 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>$(AQMBld_Output)Maps\Debug\bin</OutputPath>
-    <IntermediateOutputPath>$(AQMBld_Output)Maps\Debug\obj</IntermediateOutputPath>
+    <OutputPath>$(AQMBld_Output)Maps\$(Configuration)\bin</OutputPath>
+    <IntermediateOutputPath>$(AQMBld_Output)Maps\$(Configuration)\obj</IntermediateOutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -27,8 +27,8 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>$(AQMBld_Output)Maps\Release\bin</OutputPath>
-    <IntermediateOutputPath>$(AQMBld_Output)Maps\Release\obj</IntermediateOutputPath>
+    <OutputPath>$(AQMBld_Output)Maps\$(Configuration)\bin</OutputPath>
+    <IntermediateOutputPath>$(AQMBld_Output)Maps\$(Configuration)\obj</IntermediateOutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>

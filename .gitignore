@@ -1,2 +1,5 @@
 
-.vs/Maps/v14/.suo
+.vs/
+MapSurvivor/bin/
+MapSurvivor/obj/
+packages/
